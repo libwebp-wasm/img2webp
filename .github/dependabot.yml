@@ -1,0 +1,20 @@
+version: 2
+
+updates:
+  - package-ecosystem: gitsubmodule
+    schedule:
+      time: "23:59"
+      interval: "daily"
+      timezone: "Asia/Shanghai"
+    directory: /
+    assignees:
+      - "liuliangsir"
+    labels:
+      - "gitsubmodule"
+      - "dependencies"
+    reviewers:
+      - "liuliangsir"
+    open-pull-requests-limit: 4
+    pull-request-branch-name:
+      separator: "-"
+    rebase-strategy: auto

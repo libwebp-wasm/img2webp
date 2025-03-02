@@ -1,0 +1,27 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d7e8963f..bbfc5b29 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -578,6 +578,22 @@ if(WEBP_BUILD_IMG2WEBP)
+   parse_makefile_am(${CMAKE_CURRENT_SOURCE_DIR}/examples "IMG2WEBP_SRCS"
+                     "img2webp")
+   add_executable(img2webp ${IMG2WEBP_SRCS})
++  set_target_properties(img2webp PROPERTIES LINK_FLAGS "-s WASM=1 \
++  -s STRICT=1 \
++  -s ASSERTIONS=1 \
++  -s EXPORT_ES6=1 \
++  -s FILESYSTEM=1 \
++  -s INVOKE_RUN=0 \
++  -s MODULARIZE=1 \
++  -s MAIN_MODULE=2 \
++  -s EXIT_RUNTIME=0 \
++  -s ENVIRONMENT='web' \
++  -s ALLOW_MEMORY_GROWTH=1 \
++  -s ERROR_ON_UNDEFINED_SYMBOLS=0 \
++  -s EXPORT_NAME=loadImg2WebpWasm \
++  -s INCOMING_MODULE_JS_API=['locateFile'] \
++  -s EXPORTED_FUNCTIONS='[\"_main\",\"_malloc\"]' \
++  -s EXPORTED_RUNTIME_METHODS='[\"ccall\",\"cwrap\",\"FS\",\"stringToUTF8\",\"lengthBytesUTF8\",\"setValue\"]'")
+   target_link_libraries(img2webp exampleutil imagedec imageioutil webp
+                         libwebpmux)
+   target_include_directories(img2webp PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/src

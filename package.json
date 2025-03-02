@@ -1,0 +1,53 @@
+{
+  "name": "@libwebp-wasm/img2webp",
+  "version": "1.0.0",
+  "description": "A wasm version for img2webp of libwebp",
+  "main": "lib/img2webp.js",
+  "module": "es/img2webp.js",
+  "unpkg": "dist/img2webp.js",
+  "files": [
+    "es",
+    "lib",
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "scripts": {
+    "build:rollup": "rollup -c",
+    "build:patch": "./scripts/build-patch.sh",
+    "build:example": "cd example && pnpm build",
+    "build:mac:prepare": "./scripts/build-mac.sh",
+    "build:mac": "pnpm build:mac:prepare && pnpm build:rollup"
+  },
+  "engines": {
+    "pnpm": ">=10.4.1",
+    "node": ">=20.17.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/libwebp-wasm/img2webp.git"
+  },
+  "keywords": [
+    "wasm",
+    "libwebp",
+    "img2webp",
+    "emscripten",
+    "webassembly"
+  ],
+  "author": "liuliang@w3ctech.com",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^14.0.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^2.78.1"
+  },
+  "sideEffects": false,
+  "packageManager": "pnpm@10.4.1",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

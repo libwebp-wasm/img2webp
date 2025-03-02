@@ -1,0 +1,16 @@
+[submodule "libwebp"]
+  path = libwebp
+  url = git@github.com:webmproject/libwebp.git
+  branch = main
+[submodule "libpng"]
+  path = libpng
+  url = git@github.com:pnggroup/libpng.git
+  branch = master
+[submodule "libjpeg"]
+  path = libjpeg
+  url = git@github.com:LuaDist/libjpeg.git
+  branch = master
+[submodule "zlib"]
+  path = zlib
+  url = git@github.com:madler/zlib.git
+  branch = master

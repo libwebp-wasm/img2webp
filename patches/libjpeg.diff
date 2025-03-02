@@ -1,0 +1,25 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 33f44e5..7b8da4f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -5,7 +5,7 @@
+ # Please note that the package source code is licensed under its own license.
+ 
+ project ( libjpeg C )
+-cmake_minimum_required ( VERSION 2.8 )
++cmake_minimum_required ( VERSION 3.12 )
+ include ( cmake/dist.cmake )
+ 
+ OPTION(BUILD_STATIC OFF)
+diff --git a/jerror.c b/jerror.c
+index 8c0b9e0..3533869 100644
+--- a/jerror.c
++++ b/jerror.c
+@@ -24,6 +24,7 @@
+ #include "jpeglib.h"
+ #include "jversion.h"
+ #include "jerror.h"
++#include <stdlib.h>
+ 
+ #ifdef USE_WINDOWS_MESSAGEBOX
+ #include <windows.h>

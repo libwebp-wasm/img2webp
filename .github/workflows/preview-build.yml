@@ -1,0 +1,76 @@
+name: Preview Build
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+# Cancel prev CI if new commit come
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-site:
+    name: build site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.4.1
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker Image
+        run: docker build -f ./docker/Dockerfile -t libwebp-wasm/img2webp:${{ github.sha }} .
+
+      - name: Run Docker Container
+        run: docker run --rm  -v $(pwd)/dist:/img2webp/dist -v $(pwd)/es:/img2webp/es -v $(pwd)/lib:/img2webp/lib libwebp-wasm/img2webp:${{ github.sha }}
+
+      - name: Custom Workflow
+        run: |
+            pnpm remove --filter example --save-prod @libwebp-wasm/img2webp
+            pnpm add --filter example --save-prod @libwebp-wasm/img2webp@"workspace:^"
+            sed -i "s|export const BASE = '/img2webp/example/'|export const BASE = '/'|g" ./example/vite.constant.js
+
+      - name: Build Site
+        id: site
+        run: pnpm build:example
+
+      - name: Upload Site Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: ./example/dist/
+          retention-days: 5
+
+      # Upload PR id for next workflow use
+      - name: Save Pull Request number
+        if: ${{ always() }}
+        run: echo ${{ github.event.number }} > ./pr-id.txt
+
+      - name: Upload Pull Request number
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr
+          path: ./pr-id.txt

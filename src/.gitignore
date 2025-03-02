@@ -1,0 +1,7 @@
+# https://stackoverflow.com/a/18930104/4441984
+*
+!*/
+!.gitignore
+!index.js
+!config.js
+!utils/*.js
