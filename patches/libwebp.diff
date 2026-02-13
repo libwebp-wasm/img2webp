@@ -1,8 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index d7e8963f..bbfc5b29 100644
+index c4db2b3e..a55f85eb 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -578,6 +578,22 @@ if(WEBP_BUILD_IMG2WEBP)
+@@ -596,6 +596,22 @@ if(WEBP_BUILD_IMG2WEBP)
    parse_makefile_am(${CMAKE_CURRENT_SOURCE_DIR}/examples "IMG2WEBP_SRCS"
                      "img2webp")
    add_executable(img2webp ${IMG2WEBP_SRCS})
@@ -24,4 +24,4 @@ index d7e8963f..bbfc5b29 100644
 +  -s EXPORTED_RUNTIME_METHODS='[\"ccall\",\"cwrap\",\"FS\",\"stringToUTF8\",\"lengthBytesUTF8\",\"setValue\"]'")
    target_link_libraries(img2webp exampleutil imagedec imageioutil webp
                          libwebpmux)
-   target_include_directories(img2webp PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/src
+   target_include_directories(img2webp PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/src)
